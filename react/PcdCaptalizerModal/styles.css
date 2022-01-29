@@ -58,6 +58,20 @@ button {
     border-radius: 50%;
 }
 
+.audioButton{
+    display: flex;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background-color: #FFFFFF;     
+    border-radius: 50%;
+    position: absolute;
+    left: -7px;
+    top: -7px;
+    border: 1px solid black;
+    
+}
+
 .fluxeButtonsContainer {
     width: 100%;
     height: 140px;

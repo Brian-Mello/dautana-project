@@ -6,11 +6,15 @@ import styles from './styles.css';
 // images
 import closeIcon from '../assets/close-icon.svg';
 import smileIcon from '../assets/smile-face.svg';
+import audioOn from '../assets/volume-high.svg'
+import audioOff from '../assets/volume-off.svg'
+
 
 function PcdCaptalizerModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [page, setPage] = useState(2)
   const [isPcd, setIsPcd] = useState(false)
+  const [isAudioOn, setIsAudioOn ] = useState(true)
 
   useEffect(() => {
     const showModal = window.localStorage.getItem("notShowMore");
@@ -37,6 +41,9 @@ function PcdCaptalizerModal() {
   const handleIsPcd = () => {
     setIsPcd(true)
     handleNextPage()
+  }
+  const handleAudioClick = () =>{
+    setIsAudioOn(!isAudioOn)
   }
 
   let actualPage;
@@ -96,12 +103,14 @@ function PcdCaptalizerModal() {
     actualPage = lastModalPage
   }
 
+  
   return isOpen ? <div className={styles.modalContainer}>
       <section className={styles.modal}>
+        <div className={styles.audioButton}  onClick={handleAudioClick}> <img src={isAudioOn? audioOn: audioOff} /> </div>
         <img src={closeIcon} alt="close icon" className={styles.closeIcon} onClick={() => handleCloseModal()}/>
         {actualPage}
       </section>
-  </div> : <></>;
+  </div> : <></>; 
 }
 
 export default PcdCaptalizerModal;
