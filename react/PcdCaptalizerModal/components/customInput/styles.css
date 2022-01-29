@@ -1,0 +1,16 @@
+.radioButtonContainer {
+    width: 43%;
+    height: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid #0e0e0e;
+    border-radius: 5px;
+    margin: 0 0 40px;
+    padding: 0 0 0 10px;
+}
+
+label {
+    margin: 0 0 0 5px;
+    font-size: 13px;
+}

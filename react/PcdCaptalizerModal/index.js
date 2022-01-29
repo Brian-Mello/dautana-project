@@ -8,6 +8,7 @@ import closeIcon from "../assets/close-icon.svg";
 import smileIcon from "../assets/smile-face.svg";
 import audioOn from "../assets/volume-high.svg";
 import audioOff from "../assets/volume-off.svg";
+import CustomInput from './components/customInput';
 
 // contants
 import { PAGE_TEXT } from "./contants";
@@ -17,6 +18,16 @@ function PcdCaptalizerModal() {
   const [page, setPage] = useState(1);
   const [isPcd, setIsPcd] = useState(false);
   const [isAudioOn, setIsAudioOn] = useState(false);
+  const [daltonismOption, setDaltonismOption] = useState(false)
+  const [deafnessOption, setDeafnessOption] = useState(false)
+  const [blindnessOption, setBlindnessOption] = useState(false)
+  const [otherOptions, setOtherOptions] = useState(false)
+  const [textAreaValue, setTextValueArea] = useState("")
+  const [missingInputsError, setMissingInputsError] = useState(false)
+  const [missingTextAreaError, setMissingTextAreaError] = useState(false)
+
+  const inputsError = <p className={styles.errorMessage}>Você deve Selecionar alguma necessidade para prosseguir</p>
+  const textAreaErrorMessage = <p className={styles.errorMessage}>Para prosseguir, você precisa preencher as outras necessidades</p>
 
   useEffect(() => {
     readText(1);
@@ -33,7 +44,7 @@ function PcdCaptalizerModal() {
         }
       });
 
-      async function getNextAudio(sentence) {       
+      async function getNextAudio(sentence) {
         let audio = new SpeechSynthesisUtterance(sentence);
         const voices = window.speechSynthesis.getVoices();
         audio.voice = voices[16];
@@ -62,6 +73,22 @@ function PcdCaptalizerModal() {
   };
 
   const handleNextPage = () => {
+    if (!isPcd) {
+      setIsPcd(true);
+    }
+
+    const data = {
+      isPcd,
+      daltonismOption,
+      deafnessOption,
+      blindnessOption,
+      otherOptions,
+      textAreaValue
+    }
+
+    // const isTrue = handleCheckFields();
+
+    console.log("pcd data", data)
     readText(page + 1);
     setPage(page + 1);
   };
@@ -71,6 +98,23 @@ function PcdCaptalizerModal() {
     setPage(page - 1);
   };
 
+  const handleCheckFields = () => {
+    if (!daltonismOption && !deafnessOption && !blindnessOption && !otherOptions) {
+      setMissingInputsError(true)
+      setTimeout(() => {
+        setMissingInputsError(false)
+      }, 3000)
+      return
+    } else if (otherOptions && textAreaValue === "") {
+      setMissingTextAreaError(true)
+      setTimeout(() => {
+        setMissingTextAreaError(false)
+      }, 3000)
+      return
+    }
+
+    return true;
+  }
   const handleIsPcd = () => {
     setIsPcd(true);
     handleNextPage();
@@ -89,6 +133,7 @@ function PcdCaptalizerModal() {
       <p>Você é portador de necessidades especiais?</p>
 
       <section className={styles.fluxeButtonsContainer}>
+
         <button className={styles.modalButton} onClick={() => handleIsPcd()}>
           Sim
         </button>
@@ -98,7 +143,7 @@ function PcdCaptalizerModal() {
         >
           Não
         </button>
-      </section>
+      </section >
 
       <button className={styles.modalButton} onClick={() => handleCloseModal()}>
         Não mostrar novamente
@@ -110,6 +155,19 @@ function PcdCaptalizerModal() {
     <>
       <h2>Quais tipos de necessidades você tem?</h2>
 
+
+      <section className={styles.inputsContainer}>
+        <CustomInput name={"Daltonismo"} onChange={(e) => setDaltonismOption(e.target.checked)} />
+        <CustomInput name={"Deficiência visual"} onChange={(e) => setDeafnessOption(e.target.checked)} />
+        <CustomInput name={"Deficiência auditiva"} onChange={(e) => setBlindnessOption(e.target.checked)} />
+        <CustomInput name={"Outros"} onChange={(e) => setOtherOptions(e.target.checked)} />
+      </section>
+
+      <textarea placeholder='Descreva as outras necessidades...' className={styles.optionTextArea} onChange={(e) => setTextValueArea(e.target.value)} />
+
+      <button className={styles.modalButton} onClick={() => handleNextPage()}>Avançar</button>
+      {missingInputsError ? inputsError : ""}
+      {missingTextAreaError ? textAreaErrorMessage : ""}
       <button className={styles.modalButton} onClick={() => handleNextPage()}>
         Avançar
       </button>
