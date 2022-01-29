@@ -1,5 +1,8 @@
 {
     "pcd-captalizer-modal": {
         "component": "PcdCaptalizerModal"
+    },
+    "text-to-speech":{
+        "component":"TextToSpeech"
     }
 }
