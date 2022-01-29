@@ -28,17 +28,21 @@ function PcdCaptalizerModal() {
 
       textToPlay.forEach(async (element, index) => {
         await getNextAudio(element.text);
+        if(index === (textToPlay.length -1)){
+          setIsAudioOn(false)
+        }
       });
 
       async function getNextAudio(sentence) {       
         let audio = new SpeechSynthesisUtterance(sentence);
+        const voices = window.speechSynthesis.getVoices();
+        audio.voice = voices[16];
         window.speechSynthesis.speak(audio);
         return new Promise((resolve) => {
           audio.onend = resolve;
         });
       }
-    } else {
-      console.log("chamou o else")
+    } else {      
       const audio = window.speechSynthesis;
       audio.cancel();
     }
