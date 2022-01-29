@@ -23,7 +23,7 @@ const TextToSpeech = () => {
     if (textToSpeech.length > 0) {
       const textValue = textToSpeech[0].values[0];
       const msg = new SpeechSynthesisUtterance();
-      var voices = window.speechSynthesis.getVoices();
+      const voices = window.speechSynthesis.getVoices();
       msg.voice = voices[16];
       msg.lang = "pt-BR";
       msg.text = textValue;
