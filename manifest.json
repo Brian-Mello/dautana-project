@@ -58,6 +58,7 @@
     "vtex.store-video": "1.x",
     "vtex.product-gifts": "0.x",
     "vtex.product-price": "1.x",
+    "vtex.product-context": "0.x",
     "vtex.product-list-context": "0.x",
     "vtex.disclosure-layout": "1.x",
     "vtex.store-form": "0.x",
