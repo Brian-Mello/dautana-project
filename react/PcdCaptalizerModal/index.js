@@ -9,7 +9,8 @@ import smileIcon from '../assets/smile-face.svg';
 
 function PcdCaptalizerModal() {
   const [isOpen, setIsOpen] = useState(false);
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(2)
+  const [isPcd, setIsPcd] = useState(false)
 
   useEffect(() => {
     const showModal = window.localStorage.getItem("notShowMore");
@@ -21,20 +22,21 @@ function PcdCaptalizerModal() {
   }, [])
 
   const handleCloseModal = () => {
-    setIsOpen(!isOpen)
-  }
-
-  const handleCloseModalForever = () => {
-    window.localStorage.setItem("notShowMore", JSON.stringify(true))
-    setIsOpen(!isOpen)
+    window.localStorage.setItem("notShowMore", JSON.stringify(true));
+    setIsOpen(false)
   }
 
   const handleNextPage = () => {
-    setPage(page + 1)
+    setPage(page + 1);
   }
 
   const handlePreviousPage = () => {
     setPage(page - 1)
+  }
+
+  const handleIsPcd = () => {
+    setIsPcd(true)
+    handleNextPage()
   }
 
   let actualPage;
@@ -45,20 +47,18 @@ function PcdCaptalizerModal() {
       <p>Você é portador de necessidades especiais?</p>
 
       <section className={styles.fluxeButtonsContainer}>
-        <button className={styles.modalButton} onClick={() => handleNextPage()}>Sim</button>
+        <button className={styles.modalButton} onClick={() => handleIsPcd()}>Sim</button>
         <button className={styles.modalButton} onClick={() => handleCloseModal()}>Não</button>
       </section>
 
-      <button className={styles.modalButton} onClick={() => handleCloseModalForever()}>Não mostrar novamente</button>
+      <button className={styles.modalButton} onClick={() => handleCloseModal()}>Não mostrar novamente</button>
     </>
   )
 
   const secondModalPage = (
     <>
-      <h2>Desejamos melhorar a acessibilidade de nosso site para pessoas PCD.</h2>
-      <p>Você é portador de necessidades especiais?</p>
+      <h2>Quais tipos de necessidades você tem?</h2>
 
-      segunda pagina
       <button className={styles.modalButton} onClick={() => handleNextPage()}>Avançar</button>
     </>
   )
@@ -96,12 +96,12 @@ function PcdCaptalizerModal() {
     actualPage = lastModalPage
   }
 
-  return <div className={styles.modalContainer}>
+  return isOpen ? <div className={styles.modalContainer}>
       <section className={styles.modal}>
         <img src={closeIcon} alt="close icon" className={styles.closeIcon} onClick={() => handleCloseModal()}/>
         {actualPage}
       </section>
-  </div>;
+  </div> : <></>;
 }
 
 export default PcdCaptalizerModal;
