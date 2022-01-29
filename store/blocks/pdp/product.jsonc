@@ -1,7 +1,7 @@
 {
   "store.product": {
     "children": [
-      "flex-layout.row#product-breadcrumb",
+      "flex-layout.row#product-breadcrumb",      
       "condition-layout.product#availability",
       "flex-layout.row#description",
       "flex-layout.row#specifications-title",
@@ -59,6 +59,7 @@
       "blockClass": "product"
     },
     "children": [
+      "text-to-speech",
       "flex-layout.row#product-image",
       "product-bookmark",
       "product-specification-badges"
@@ -78,7 +79,8 @@
     "children": ["stack-layout"],
     "props": {
       "width": "60%",
-      "rowGap": 0
+      "rowGap": 0,
+      "blockClass":"teste-do-braia"
     }
   },
   "flex-layout.row#product-image": {
