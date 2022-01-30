@@ -1,13 +1,20 @@
-.radioButtonContainer {
-    width: 43%;
+.checkboxButtonContainer {
+    width: 100%;
     height: 50px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     border: 1px solid #0e0e0e;
     border-radius: 5px;
-    margin: 0 0 40px;
+    margin: 0 0 10px;
     padding: 0 0 0 10px;
+}
+
+@media (min-width: 350px){
+    .checkboxButtonContainer {
+        width: 45%;
+        margin: 0 0 40px;
+    }
 }
 
 label {
