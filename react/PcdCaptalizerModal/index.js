@@ -14,29 +14,29 @@ import CustomInput from './components/customInput';
 import { PAGE_TEXT } from "./contants";
 
 function PcdCaptalizerModal() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [page, setPage] = useState(1);
   const [isPcd, setIsPcd] = useState(false);
   const [isAudioOn, setIsAudioOn] = useState(false);
   const [daltonismOption, setDaltonismOption] = useState(false)
-  const [deafnessOption, setDeafnessOption] = useState(false)
+  const [deafnessOption, setDeafnessOption] = useState(false) 
   const [blindnessOption, setBlindnessOption] = useState(false)
   const [otherOptions, setOtherOptions] = useState(false)
   const [textAreaValue, setTextValueArea] = useState("")
   const [missingInputsError, setMissingInputsError] = useState(false)
   const [missingTextAreaError, setMissingTextAreaError] = useState(false)
+  const localStorageKey = "should-show-acessibility";
 
   const inputsError = <p className={styles.errorMessage}>Você deve Selecionar alguma necessidade para prosseguir</p>
   const textAreaErrorMessage = <p className={styles.errorMessage}>Para prosseguir, você precisa preencher as outras necessidades</p>
 
   useEffect(() => {
-    readText(1);
+    readText(page);
   }, [isAudioOn]);
 
-  const readText = async (page) => {
+  const readText = async (page) => {    
+    const textToPlay = PAGE_TEXT[page];   
     if (isAudioOn) {
-      const textToPlay = PAGE_TEXT[page];
-
       textToPlay.forEach(async (element, index) => {
         await getNextAudio(element.text);
         if(index === (textToPlay.length -1)){
@@ -45,9 +45,7 @@ function PcdCaptalizerModal() {
       });
 
       async function getNextAudio(sentence) {
-        let audio = new SpeechSynthesisUtterance(sentence);
-        const voices = window.speechSynthesis.getVoices();
-        audio.voice = voices[16];
+        let audio = new SpeechSynthesisUtterance(sentence);        
         window.speechSynthesis.speak(audio);
         return new Promise((resolve) => {
           audio.onend = resolve;
@@ -61,7 +59,7 @@ function PcdCaptalizerModal() {
 
   useEffect(() => {
     const showModal = window.localStorage.getItem("notShowMore");
-    readText(1);
+   // readText(1);
     if (!showModal) {
       setIsOpen(true);
     }
@@ -86,9 +84,10 @@ function PcdCaptalizerModal() {
       textAreaValue
     }
 
-    // const isTrue = handleCheckFields();
+    localStorage.setItem(localStorageKey, JSON.stringify(data))   
 
     console.log("pcd data", data)
+    setIsAudioOn(true)
     readText(page + 1);
     setPage(page + 1);
   };

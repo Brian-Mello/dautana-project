@@ -19,6 +19,7 @@ const TextToSpeech = () => {
     }
   }, []);
 
+  
   const handleClick = () => {
     if (textToSpeech.length > 0) {
       const textValue = textToSpeech[0].values[0];
@@ -32,7 +33,7 @@ const TextToSpeech = () => {
   };
 
   const renderComponent = () => {
-    if (textToSpeech.length && true) {
+    if (textToSpeech.length && acessibility?.daltonismOption) {
       return (
         <button
           style={{
