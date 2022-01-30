@@ -127,10 +127,12 @@ function PcdCaptalizerModal() {
 
   const firstModalPage = (
     <>
-      <h2>
-        Desejamos melhorar a acessibilidade de nosso site para pessoas PCD.
-      </h2>
-      <p>Você é portador de necessidades especiais?</p>
+      <section className={styles.modalTextContainer}>
+        <h2>
+          Desejamos melhorar a acessibilidade de nosso site para pessoas PCD.
+        </h2>
+        <p>Você é portador de necessidades especiais?</p>
+      </section>
 
       <section className={styles.fluxeButtonsContainer}>
 
@@ -155,38 +157,39 @@ function PcdCaptalizerModal() {
     <>
       <h2>Quais tipos de necessidades você tem?</h2>
 
-
       <section className={styles.inputsContainer}>
         <CustomInput name={"Daltonismo"} onChange={(e) => setDaltonismOption(e.target.checked)} />
-        <CustomInput name={"Deficiência visual"} onChange={(e) => setDeafnessOption(e.target.checked)} />
-        <CustomInput name={"Deficiência auditiva"} onChange={(e) => setBlindnessOption(e.target.checked)} />
+        <CustomInput name={"Deficiência Visual"} onChange={(e) => setDeafnessOption(e.target.checked)} />
+        <CustomInput name={"Deficiência Auditiva"} onChange={(e) => setBlindnessOption(e.target.checked)} />
         <CustomInput name={"Outros"} onChange={(e) => setOtherOptions(e.target.checked)} />
       </section>
 
       <textarea placeholder='Descreva as outras necessidades...' className={styles.optionTextArea} onChange={(e) => setTextValueArea(e.target.value)} />
-
-      <button className={styles.modalButton} onClick={() => handleNextPage()}>Avançar</button>
-      {missingInputsError ? inputsError : ""}
       {missingTextAreaError ? textAreaErrorMessage : ""}
+
       <button className={styles.modalButton} onClick={() => handleNextPage()}>
         Avançar
       </button>
+      {missingInputsError ? inputsError : ""}
     </>
   );
 
   const thirdModalPage = (
     <>
       <h2>
-        Gostaria de aplicar a mudanças no site para as suas necessidades?.
+        Gostaria de aplicar a mudanças no site para as suas necessidades?
       </h2>
 
-      <button className={styles.modalButton} onClick={() => handleNextPage()}>
-        Sim
-      </button>
-      <button className={styles.modalButton} onClick={() => handleNextPage()}>
-        Não
-      </button>
+      <section className={styles.fluxeButtonsContainer}>
 
+        <button className={styles.modalButton} onClick={() => handleNextPage()}>
+          Sim
+        </button>
+        <button className={styles.modalButton} onClick={() => handleNextPage()}>
+          Não
+        </button>
+
+      </section>
       <button
         className={styles.modalButton}
         onClick={() => handlePreviousPage()}
@@ -198,11 +201,12 @@ function PcdCaptalizerModal() {
 
   const lastModalPage = (
     <>
-      <h2>Agradecemos pela participação!.</h2>
-      <p>Buscamos melhorar continuamente a acessibilidade no nosso site.</p>
-      <p>Esperamos que você tenha uma boa experiência. Boas compras!</p>
-
-      <img src={smileIcon} alt="Smile face" />
+    <section className={styles.modalTextContainer}>
+        <h2>Agradecemos pela participação!</h2>
+        <p>Buscamos melhorar continuamente a acessibilidade no nosso site.</p>
+        <p>Esperamos que você tenha uma boa experiência. Boas compras!</p>
+      </section>
+      <img src={smileIcon} alt="Smile face" className={styles.smileImage}/>
 
       <button className={styles.modalButton} onClick={() => handleCloseModal()}>
         Fechar
